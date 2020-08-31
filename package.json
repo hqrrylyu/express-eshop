@@ -1,0 +1,26 @@
+{
+  "name": "assignment-eshop",
+  "version": "1.0.0",
+  "main": "src/app.mjs",
+  "type": "module",
+  "scripts": {
+    "serve": "node ./src/app.mjs",
+    "serve:dev": "nodemon ./src/app.mjs",
+    "lint": "standard || exit 0",
+    "format": "standard --verbose --fix || exit 0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "env-var": "^6.3.0",
+    "express": "^4.17.1",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "semistandard": "^14.2.3",
+    "standard": "^14.3.4",
+    "standardx": "^5.0.0"
+  }
+}

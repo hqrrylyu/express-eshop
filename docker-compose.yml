@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      target: prod-stage
+    env_file: ./envs/prod/web.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12-alpine
+    env_file: ./envs/prod/db.env
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+
+
+volumes:
+  db_data:

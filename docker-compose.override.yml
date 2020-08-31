@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      target: dev-stage
+      args:
+        DEV: --dev
+    env_file: ./envs/local/web.env
+    volumes:
+      - ".:/app"
+    ports:
+      - "8000:8000"
+
+  db:
+    env_file: ./envs/local/db.env
