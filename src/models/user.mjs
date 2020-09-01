@@ -35,18 +35,24 @@ const User = connection.define('User', {
   passwordHash: {
     type: DataTypes.STRING,
     allowNull: false
-  }
-}, {
-  instanceMethods: {
-    async isValidPassword (password) {
-      return bcrypt.compare(password, this.passwordHash)
-    }
   },
 
+  fullName: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      if (!this.lastName) return this.firstName
+      return `${this.firstName} ${this.lastName}`
+    }
+  }
+}, {
   hooks: {
     beforeCreate: hashPassword,
     beforeUpdate: hashPassword
   }
 })
+
+User.prototype.isValidPassword = async function (password) {
+  return bcrypt.compare(password, this.passwordHash)
+}
 
 export default User

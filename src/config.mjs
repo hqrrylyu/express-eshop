@@ -10,6 +10,9 @@ export const APP_DIR = __dirname
 export const APP_DEBUG = env.get('DEBUG')
   .default('false').asBoolStrict()
 
+export const APP_SECRET_KEY = env.get('SECRET_KEY')
+  .required().asString()
+
 export const APP_PORT = env.get('PORT')
   .default(8000).asPortNumber()
 
