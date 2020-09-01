@@ -12,3 +12,6 @@ export const APP_DEBUG = env.get('DEBUG')
 
 export const APP_PORT = env.get('PORT')
   .default(8000).asPortNumber()
+
+export const APP_DB_URI = env.get('DB_URI')
+  .required().asString()
