@@ -5,8 +5,8 @@ import path from 'path'
 import connection from './db_connection.mjs'
 import session from 'express-session'
 import SequelizeSessionInit from 'connect-session-sequelize'
-import { signUp, signIn, logout } from './views/auth.mjs'
 import userMiddleware from './middleware/user.mjs'
+import { authRoutes } from './routes/index.mjs'
 
 const app = express()
 
@@ -28,17 +28,7 @@ app.get('/', (req, res) => {
   res.render('index', { req, pageTitle: 'Homepage' })
 })
 
-app
-  .route('/sign-up')
-  .get(signUp.get)
-  .post(signUp.post)
-
-app
-  .route('/sign-in')
-  .get(signIn.get)
-  .post(signIn.post)
-
-app.post('/logout', logout);
+app.use('/', authRoutes);
 
 (async () => {
   await connection.sync()
