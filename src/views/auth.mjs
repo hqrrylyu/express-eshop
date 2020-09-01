@@ -2,7 +2,7 @@ import User from '../models/user.mjs'
 
 export const signUp = {
   async get (req, res) {
-    res.render('signUp', { req, pageTitle: 'Sign Up' })
+    res.render('auth/signUp', { req, pageTitle: 'Sign Up' })
   },
 
   async post (req, res) {
@@ -14,7 +14,7 @@ export const signUp = {
     } catch (error) {
       console.error(error)
       return res.render(
-        'signUp',
+        'auth/signUp',
         { req, pageTitle: 'Sign Up', errors: error.errors.map(e => e.message) }
       )
     }
@@ -23,7 +23,7 @@ export const signUp = {
 
 export const signIn = {
   async get (req, res) {
-    res.render('signIn', { req, pageTitle: 'Sign In' })
+    res.render('auth/signIn', { req, pageTitle: 'Sign In' })
   },
 
   async post (req, res) {
@@ -36,7 +36,7 @@ export const signIn = {
     if (!(await user.isValidPassword(password))) {
       errors = ['Invalid password']
     }
-    if (errors) return res.render('signIn', { req, errors })
+    if (errors) return res.render('auth/signIn', { req, errors })
 
     req.session.userId = user.id
     console.log('"%s" logged in.')
