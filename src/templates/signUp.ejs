@@ -1,0 +1,49 @@
+<%- include('header') %>
+
+<main>
+  <h1>
+    Sign Up
+  </h1>
+
+  <form action="/sign-up" method="post" class="form">
+    <ul>
+      <% for (const e of error.errors) { %>
+      <li><%= e.message %></li>
+      <% } %>
+    </ul>
+
+    <div class="form__field">
+      <label for="email">
+        Email
+      </label>
+      <input type="email" name="email" id="email" required>
+    </div>
+
+    <div class="form__field">
+      <label for="firstname">
+        First name
+      </label>
+      <input type="text" name="firstName" id="firstname" minlength="3" maxlength="50" required>
+    </div>
+
+    <div class="form__field">
+      <label for="lastname">
+        Last name
+      </label>
+      <input type="text" name="lastName" id="lastname" minlength="3" maxlength="50">
+    </div>
+
+    <div class="form__field">
+      <label for="password">
+        Password
+      </label>
+      <input type="password" name="password" id="password" minlength="6" maxlength="24">
+    </div>
+
+    <button type="submit">
+      SignUp
+    </button>
+  </form>
+</main>
+
+<%- include('footer') %>
