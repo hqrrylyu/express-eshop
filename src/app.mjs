@@ -6,7 +6,7 @@ import connection from './db_connection.mjs'
 const app = express()
 
 app.set('view engine', 'ejs')
-app.set('views', path.join(config.APP_DIR, 'views'))
+app.set('views', path.join(config.APP_DIR, 'templates'))
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Hello world' })
