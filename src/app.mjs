@@ -31,7 +31,8 @@ app.get('/', (req, res) => {
 app.use('/', authRoutes);
 
 (async () => {
-  await connection.sync()
+  const syncOptions = config.APP_DEBUG ? { alter: true } : undefined
+  await connection.sync(syncOptions)
 
   app.listen(
     config.APP_PORT,
