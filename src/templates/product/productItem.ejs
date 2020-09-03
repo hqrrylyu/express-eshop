@@ -12,9 +12,23 @@
   </div>
 
   <div class="product-item__body">
-    <p class="product-item__description">
-      <%= product.description %>
+    <% if (product.color) { %>
+    <p class="product-item__body-item">
+      <strong>Color:</strong> <%= product.color %>
     </p>
+    <% } %>
+
+    <% if (product.size) { %>
+    <p class="product-item__body-item">
+      <strong>Size:</strong> <%= product.size %>
+    </p>
+    <% } %>
+
+    <% if (product.description) { %>
+    <p class="product-item__body-item">
+      <strong>Description:</strong> <%= product.description %>
+    </p>
+    <% } %>
 
     <a href="/products/<%= product.id %>" class="product-item__detail-link">
       Detail
