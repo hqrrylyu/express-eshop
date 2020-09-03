@@ -26,6 +26,38 @@
     </div>
 
     <div class="form__field">
+      <label for="category" class="form__label">
+        Category
+      </label>
+
+      <div>
+        <% for (const category of categories) { %>
+        <input type="radio" name="categoryId" id="category_<%= category.id %>" value="<%= category.id %>">
+
+        <label for="category_<%= category.id %>">
+          <%= category.name %>
+        </label>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label for="brand" class="form__label">
+        Brand
+      </label>
+
+      <div>
+        <% for (const brand of brands) { %>
+        <input type="radio" name="brandId" id="brand_<%= brand.id %>" value="<%= brand.id %>">
+
+        <label for="brand_<%= brand.id %>">
+          <%= brand.name %>
+        </label>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="form__field">
       <label for="price" class="form__label">
         Price
       </label>

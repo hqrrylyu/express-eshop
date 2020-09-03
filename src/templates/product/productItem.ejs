@@ -12,6 +12,14 @@
   </div>
 
   <div class="product-item__body">
+    <p class="product-item__body-item">
+      <strong>Category:</strong> <%= product.category.name %>
+    </p>
+
+    <p class="product-item__body-item">
+      <strong>Brand:</strong> <%= product.brand.name %>
+    </p>
+
     <% if (product.color) { %>
     <p class="product-item__body-item">
       <strong>Color:</strong> <%= product.color %>

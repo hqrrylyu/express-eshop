@@ -1,6 +1,6 @@
 import fs from 'fs'
 import util from 'util'
-import { Product } from '../models/index.mjs'
+import { Product, Category, Brand } from '../models/index.mjs'
 import { PRODUCT_COLORS, PRODUCT_SIZES } from '../models/product.mjs'
 import Upload from '../upload.mjs'
 
@@ -9,9 +9,11 @@ const upload = Upload.single('image')
 export const addProduct = {
   async get (req, res) {
     if (!req.user) return res.redirect('/')
+    const categories = await Category.findAll()
+    const brands = await Brand.findAll()
     res.render(
       'product/add',
-      { req, pageTitle: 'Add product', PRODUCT_COLORS, PRODUCT_SIZES }
+      { req, pageTitle: 'Add product', categories, brands, PRODUCT_COLORS, PRODUCT_SIZES }
     )
   },
 
@@ -39,10 +41,12 @@ export const addProduct = {
             console.log(`"${util.inspect(imagePath)}" has been deleted.`)
           })
 
-          res.render(
-            'product/add',
-            { ...context, errors: error.errors.map(e => e.message) }
-          )
+          Promise.all([Category.findAll(), Brand.findAll()])
+            .then(([categories, brands]) =>
+              res.render(
+                'product/add',
+                { ...context, categories, brands, errors: error.errors.map(e => e.message) }
+              ))
         })
     })
   }
@@ -52,7 +56,12 @@ export const productList = {
   async get (req, res) {
     const context = { req, pageTitle: 'Products' }
     try {
-      const products = await Product.findAll()
+      const products = await Product.findAll({
+        include: [
+          { model: Category, required: true },
+          { model: Brand, required: true }
+        ]
+      })
       return res.render('product/list', { ...context, products })
     } catch (error) {
       console.log(error)
