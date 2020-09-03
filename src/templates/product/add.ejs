@@ -5,12 +5,8 @@
   </h1>
 
   <form action="/products/add" method="post" enctype="multipart/form-data" class="form">
-    <% if (typeof errors !== 'undefined') { %>
-    <ul>
-      <% for (const error of errors) { %>
-      <li><%= error %> </li>
-      <% } %>
-    </ul>
+    <% if (typeof errors !== 'undefined' && errors.length) { %>
+    <%- include('../errors', { errors }) %>
     <% } %>
 
     <div class="form__field">
