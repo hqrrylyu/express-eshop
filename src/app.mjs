@@ -19,6 +19,7 @@ const SequelizeStore = SequelizeSessionInit(session.Store)
 app.use(session({
   secret: config.APP_SECRET_KEY,
   store: new SequelizeStore({ db: connection }),
+  saveUninitialized: false,
   resave: false,
   proxy: true
 }))
