@@ -6,7 +6,7 @@ import connection from './db_connection.mjs'
 import session from 'express-session'
 import SequelizeSessionInit from 'connect-session-sequelize'
 import userMiddleware from './middleware/user.mjs'
-import { authRoutes } from './routes/index.mjs'
+import { authRoutes, productRoutes } from './routes/index.mjs'
 
 const app = express()
 
@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
   res.render('index', { req, pageTitle: 'Homepage' })
 })
 
-app.use('/', authRoutes);
+app.use('/', authRoutes)
+app.use('/products', productRoutes);
 
 (async () => {
   const syncOptions = config.APP_DEBUG ? { alter: true } : undefined

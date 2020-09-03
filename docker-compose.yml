@@ -6,6 +6,8 @@ services:
       context: .
       target: prod-stage
     env_file: ./envs/prod/web.env
+    volumes:
+      - "uploads_data:/uploads"
     depends_on:
       - db
 
@@ -18,3 +20,4 @@ services:
 
 volumes:
   db_data:
+  uploads_data:

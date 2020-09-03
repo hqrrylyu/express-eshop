@@ -3,7 +3,7 @@ import connection from '../db_connection.mjs'
 
 const { DataTypes } = Sequelize
 
-const PRODUCT_COLORS = [
+export const PRODUCT_COLORS = [
   'red',
   'orange',
   'yellow',
@@ -17,7 +17,7 @@ const PRODUCT_COLORS = [
   'white'
 ]
 
-const PRODUCT_SIZES = [
+export const PRODUCT_SIZES = [
   'xs', 's', 'm', 'l', 'xl', 'xxl'
 ]
 
@@ -57,14 +57,14 @@ const Product = connection.define('Product', {
   color: {
     type: DataTypes.CHAR(10),
     validate: {
-      isIn: PRODUCT_COLORS
+      isIn: [PRODUCT_COLORS]
     }
   },
 
   size: {
     type: DataTypes.CHAR(10),
     validate: {
-      isIn: PRODUCT_SIZES
+      isIn: [PRODUCT_SIZES]
     }
   }
 })

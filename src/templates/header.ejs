@@ -19,6 +19,11 @@
       margin-bottom: .5rem;
     }
 
+    .form .form__label {
+      font-weight: bold;
+      margin-right: .25rem;
+    }
+
     .header__link:not(:last-child) {
       margin-right: .5rem;
     }
@@ -29,6 +34,10 @@
 <body>
   <header class="header">
     <% if (typeof req !== 'undefined' && req.user) { %>
+    <a href="/products/add" class="header__link">
+      Add product
+    </a>
+
     <span>
       You are signed in as <strong><%= req.user.fullName %></strong>
       <form action="/logout" method="post" novalidate style="display: inline-block;">

@@ -1,0 +1,85 @@
+<%- include('../header') %>
+<main>
+  <h1>
+    <%= pageTitle %>
+  </h1>
+
+  <form action="/products/add" method="post" enctype="multipart/form-data" class="form">
+    <% if (typeof errors !== 'undefined') { %>
+    <ul>
+      <% for (const error of errors) { %>
+      <li><%= error %> </li>
+      <% } %>
+    </ul>
+    <% } %>
+
+    <div class="form__field">
+      <label for="name" class="form__label">
+        Name
+      </label>
+
+      <input type="text" name="name" id="name" required>
+    </div>
+
+    <div class="form__field">
+      <label for="image" class="form__label">
+        Image
+      </label>
+
+      <input type="file" name="image" id="image" accept="image/png, image/jpeg" required>
+    </div>
+
+    <div class="form__field">
+      <label for="price" class="form__label">
+        Price
+      </label>
+
+      <input type="number" name="price" id="price" min="0" required>
+    </div>
+
+    <div class="form__field">
+      <label for="description" class="form__label">
+        Description
+      </label>
+
+      <textarea name="description" id="description" cols="40" rows="4"></textarea>
+    </div>
+
+    <div class="form__field">
+      <label for="color" class="form__label">
+        Color
+      </label>
+
+      <div>
+        <% for (const color of PRODUCT_COLORS) { %>
+        <input type="radio" name="color" id="color_<%= color %>" value="<%= color %>">
+
+        <label for="color_<%= color %>">
+          <%= color %>
+        </label>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label for="size" class="form__label">
+        Size
+      </label>
+
+      <div>
+        <% for (const size of PRODUCT_SIZES) { %>
+        <input type="radio" name="size" id="size_<%= size %>" value="<%= size %>">
+
+        <label for="size_<%= size %>">
+          <%= size %>
+        </label>
+        <% } %>
+      </div>
+    </div>
+
+    <button type="submit">
+      Add
+    </button>
+  </form>
+</main>
+<%- include('../footer') %>
