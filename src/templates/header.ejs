@@ -24,8 +24,12 @@
       margin-right: .25rem;
     }
 
-    .header__link:not(:last-child) {
+    .header .header__item:not(:last-child) {
       margin-right: .5rem;
+    }
+
+    .header .header__link {
+      font-weight: bold;
     }
 
     .product-list {
@@ -53,12 +57,12 @@
 
 <body>
   <header class="header">
-    <% if (typeof req !== 'undefined' && req.user) { %>
-    <a href="/products/add" class="header__link">
-      Add product
+    <a href="/" class="header__item header__link">
+      Home
     </a>
 
-    <span>
+    <% if (typeof req !== 'undefined' && req.user) { %>
+    <span class="header__item">
       You are signed in as <strong><%= req.user.fullName %></strong>
       <form action="/logout" method="post" novalidate style="display: inline-block;">
         <button type="submit">
@@ -66,12 +70,16 @@
         </button>
       </form>
     </span>
+
+    <a href="/products/add" class="header__item header__link">
+      Add product
+    </a>
     <% } else { %>
-    <a href="/sign-in" class="header__link">
+    <a href="/sign-in" class="header__item header__link">
       Sign In
     </a>
 
-    <a href="/sign-up" class="header__link">
+    <a href="/sign-up" class="header__item header__link">
       Sign Up
     </a>
     <% } %>
