@@ -3,7 +3,7 @@ import connection from '../db_connection.mjs'
 
 const { DataTypes } = Sequelize
 
-const Category = connection.define('Category', {
+const Category = connection.define('category', {
   name: {
     type: DataTypes.STRING(50),
     allowNull: false,

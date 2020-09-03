@@ -21,7 +21,7 @@ export const PRODUCT_SIZES = [
   'xs', 's', 'm', 'l', 'xl', 'xxl'
 ]
 
-const Product = connection.define('Product', {
+const Product = connection.define('product', {
   name: {
     type: DataTypes.STRING(100),
     allowNull: false,

@@ -10,7 +10,7 @@ async function hashPassword (user) {
   user.setDataValue('passwordHash', hash)
 }
 
-const User = connection.define('User', {
+const User = connection.define('user', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
