@@ -1,0 +1,23 @@
+<%- include('../header') %>
+
+<main>
+  <h1>
+    <%= pageTitle %>
+  </h1>
+
+  <% if (typeof products !== 'undefined' && products.length) { %>
+  <ul class="product-list">
+    <% for (const product of products) { %>
+    <li class="product-list__item">
+      <%- include('./productItem', { product }) %>
+    </li>
+    <% } %>
+  </ul>
+  <% } else { %>
+  <p>
+    No products added yet.
+  </p>
+  <% } %>
+</main>
+
+<%- include('../footer') %>

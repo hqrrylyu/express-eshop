@@ -47,3 +47,19 @@ export const addProduct = {
     })
   }
 }
+
+export const productList = {
+  async get (req, res) {
+    const context = { req, pageTitle: 'Products' }
+    try {
+      const products = await Product.findAll()
+      return res.render('product/list', { ...context, products })
+    } catch (error) {
+      console.log(error)
+      return res.render(
+        'product/list',
+        { ...context, errors: error.errors.map(e => e.message) }
+      )
+    }
+  }
+}

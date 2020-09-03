@@ -1,0 +1,23 @@
+<div class="product-item">
+  <img src="<%= product.imagePath %>" alt="<%= product.name %>" width="150" height="150">
+
+  <div class="product-item__header">
+    <h4 class="product-item__name">
+      <%= product.name %>
+    </h4>
+
+    <span class="product-item__price">
+      <%= product.formattedPrice %>
+    </span>
+  </div>
+
+  <div class="product-item__body">
+    <p class="product-item__description">
+      <%= product.description %>
+    </p>
+
+    <a href="/products/<%= product.id %>" class="product-item__detail-link">
+      Detail
+    </a>
+  </div>
+</div>

@@ -49,6 +49,10 @@ const Product = connection.define('Product', {
         return value > 0
       }
     },
+    get () {
+      const price = this.getDataValue('price')
+      return price / 100
+    },
     set (value) {
       this.setDataValue('price', value * 100)
     }
@@ -65,6 +69,13 @@ const Product = connection.define('Product', {
     type: DataTypes.CHAR(10),
     validate: {
       isIn: [PRODUCT_SIZES]
+    }
+  },
+
+  formattedPrice: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return `${this.price}$`
     }
   }
 })

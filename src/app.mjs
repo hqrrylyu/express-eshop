@@ -6,6 +6,7 @@ import connection from './db_connection.mjs'
 import session from 'express-session'
 import SequelizeSessionInit from 'connect-session-sequelize'
 import userMiddleware from './middleware/user.mjs'
+import { productList } from './views/product.mjs'
 import { authRoutes, productRoutes } from './routes/index.mjs'
 
 const app = express()
@@ -24,11 +25,9 @@ app.use(session({
   proxy: true
 }))
 app.use(userMiddleware)
+app.use('/uploads', express.static(config.APP_UPLOADS_DIR))
 
-app.get('/', (req, res) => {
-  res.render('index', { req, pageTitle: 'Homepage' })
-})
-
+app.get('/', productList.get)
 app.use('/', authRoutes)
 app.use('/products', productRoutes);
 

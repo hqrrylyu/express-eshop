@@ -18,3 +18,5 @@ export const APP_PORT = env.get('PORT')
 
 export const APP_DB_URI = env.get('DB_URI')
   .required().asString()
+
+export const APP_UPLOADS_DIR = '/uploads'
