@@ -7,7 +7,7 @@ import session from 'express-session'
 import SequelizeSessionInit from 'connect-session-sequelize'
 import userMiddleware from './middleware/user.mjs'
 import { productList } from './views/product.mjs'
-import { authRoutes, productRoutes } from './routes/index.mjs'
+import { authRoutes, categoryRoutes, productRoutes } from './routes/index.mjs'
 
 const app = express()
 
@@ -29,6 +29,7 @@ app.use('/uploads', express.static(config.APP_UPLOADS_DIR))
 
 app.get('/', productList.get)
 app.use('/', authRoutes)
+app.use('/categories', categoryRoutes)
 app.use('/products', productRoutes);
 
 (async () => {
