@@ -1,8 +1,12 @@
 import fs from 'fs'
 import util from 'util'
+import Sequelize from 'sequelize'
 import { Product, Category, Brand } from '../models/index.mjs'
 import { PRODUCT_COLORS, PRODUCT_SIZES } from '../models/product.mjs'
 import Upload from '../upload.mjs'
+import { ProductFilters } from '../utils.mjs'
+
+const { and } = Sequelize.Op
 
 const upload = Upload.single('image')
 
@@ -54,15 +58,28 @@ export const addProduct = {
 
 export const productList = {
   async get (req, res) {
-    const context = { req, pageTitle: 'Products' }
+    const categories = await Category.findAll()
+    const brands = await Brand.findAll()
+    const maxPrice = await Product.aggregate('price', 'max')
+    const context = {
+      req, pageTitle: 'Products', maxPrice, categories, brands, PRODUCT_COLORS, PRODUCT_SIZES
+    }
+
+    const opts = {
+      include: [
+        { model: Category, required: true },
+        { model: Brand, required: true }
+      ]
+    }
+    let filters = new ProductFilters(req.query)
+    filters = filters.getFilters()
+    console.log('Product filters: %s', util.inspect(filters))
+    if (filters.length) opts.where = { [and]: filters }
     try {
-      const products = await Product.findAll({
-        include: [
-          { model: Category, required: true },
-          { model: Brand, required: true }
-        ]
-      })
-      return res.render('product/list', { ...context, products })
+      const { count, rows: products } = await Product.findAndCountAll(opts)
+      return res.render(
+        'product/list', { ...context, maxPrice, categories, brands, count, products }
+      )
     } catch (error) {
       console.log(error)
       return res.render(

@@ -5,7 +5,105 @@
     <%= pageTitle %>
   </h1>
 
+  <div>
+    <h3>
+      Filters
+    </h3>
+
+    <form method="get" class="form">
+      <div class="form__inline-fields">
+        <div class="form__field">
+          <label for="minPrice" class="form__label">
+            Min. price
+          </label>
+
+          <input type="number" name="minPrice" id="minPrice" min="0" step="0.01">
+        </div>
+
+        <div class="form__field">
+          <label for="maxPrice" class="form__label">
+            Max. price
+          </label>
+
+          <input type="number" name="maxPrice" id="maxPrice" min="0" step="0.01" max="<%= maxPrice %>">
+        </div>
+      </div>
+
+      <div class="form__field">
+        <label for="category" class="form__label">
+          Category
+        </label>
+
+        <div>
+          <% for (const category of categories) { %>
+          <input type="checkbox" name="category" id="category_<%= category.id %>" value="<%= category.id %>">
+
+          <label for="category_<% category.id %>">
+            <%= category.name %>
+          </label>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="form__field">
+        <label for="brand" class="form__label">
+          Brand
+        </label>
+
+        <div>
+          <% for (const brand of brands) { %>
+          <input type="checkbox" name="brand" id="brand_<%= brand.id %>" value="<%= brand.id %>">
+
+          <label for="brand_<% brand.id %>">
+            <%= brand.name %>
+          </label>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="form__field">
+        <label for="color" class="form__label">
+          Color
+        </label>
+
+        <div>
+          <% for (const color of PRODUCT_COLORS) { %>
+          <input type="checkbox" name="color" id="color_<%= color %>" value="<%= color %>">
+
+          <label for="color_<% color %>">
+            <%= color %>
+          </label>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="form__field">
+        <label for="color" class="form__label">
+          Size
+        </label>
+
+        <div>
+          <% for (const size of PRODUCT_SIZES) { %>
+          <input type="checkbox" name="size" id="size_<%= size %>" value="<%= size %>">
+
+          <label for="size_<% size %>">
+            <%= size %>
+          </label>
+          <% } %>
+        </div>
+      </div>
+
+      <button type="submit">
+        Apply
+      </button>
+    </form>
+  </div>
+
   <% if (typeof products !== 'undefined' && products.length) { %>
+  <p>
+    Found <strong><%= count %></strong> product(s)
+  </p>
+
   <ul class="product-list">
     <% for (const product of products) { %>
     <li class="product-list__item">
