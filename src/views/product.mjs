@@ -56,20 +56,37 @@ export const addProduct = {
   }
 }
 
+const PRODUCT_ORDERINGS = {
+  newFirst: ['createdAt', 'DESC'],
+  oldFirst: ['createdAt', 'ASC'],
+  cheapFirst: ['price', 'ASC'],
+  expensiveFirst: ['price', 'DESC']
+}
+
 export const productList = {
   async get (req, res) {
     const categories = await Category.findAll()
     const brands = await Brand.findAll()
     const maxPrice = await Product.aggregate('price', 'max')
     const context = {
-      req, pageTitle: 'Products', maxPrice, categories, brands, PRODUCT_COLORS, PRODUCT_SIZES
+      req,
+      pageTitle: 'Products',
+      maxPrice,
+      categories,
+      brands,
+      PRODUCT_COLORS,
+      PRODUCT_SIZES,
+      PRODUCT_ORDERINGS: Object.keys(PRODUCT_ORDERINGS)
     }
 
+    const order = PRODUCT_ORDERINGS[req.query.order || 'newFirst']
     const opts = {
       include: [
         { model: Category, required: true },
         { model: Brand, required: true }
-      ]
+      ],
+
+      order: [order]
     }
     let filters = new ProductFilters(req.query)
     filters = filters.getFilters()

@@ -93,6 +93,20 @@
         </div>
       </div>
 
+      <div class="form__field">
+        <label for="order" class="form__label">
+          Order
+        </label>
+
+        <select name="order" id="order">
+          <% for (const order of PRODUCT_ORDERINGS) { %>
+          <option value="<%= order %>">
+            <%= order %>
+          </option>
+          <% } %>
+        </select>
+      </div>
+
       <button type="submit">
         Apply
       </button>
