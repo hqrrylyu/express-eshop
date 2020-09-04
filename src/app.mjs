@@ -6,7 +6,7 @@ import connection from './db_connection.mjs'
 import session from 'express-session'
 import SequelizeSessionInit from 'connect-session-sequelize'
 import userMiddleware from './middleware/user.mjs'
-import { productList } from './views/product.mjs'
+import { listProducts } from './views/product.mjs'
 import {
   authRoutes,
   categoryRoutes,
@@ -32,7 +32,7 @@ app.use(session({
 app.use(userMiddleware)
 app.use('/uploads', express.static(config.APP_UPLOADS_DIR))
 
-app.get('/', productList.get)
+app.get('/', listProducts)
 app.use('/', authRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/brands', brandRoutes)

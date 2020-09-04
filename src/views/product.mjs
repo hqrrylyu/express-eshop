@@ -63,46 +63,44 @@ const PRODUCT_ORDERINGS = {
   expensiveFirst: ['price', 'DESC']
 }
 
-export const productList = {
-  async get (req, res) {
-    const categories = await Category.findAll()
-    const brands = await Brand.findAll()
-    const maxPrice = await Product.aggregate('price', 'max')
-    const context = {
-      req,
-      pageTitle: 'Products',
-      maxPrice,
-      categories,
-      brands,
-      PRODUCT_COLORS,
-      PRODUCT_SIZES,
-      PRODUCT_ORDERINGS: Object.keys(PRODUCT_ORDERINGS)
-    }
+export async function listProducts (req, res) {
+  const categories = await Category.findAll()
+  const brands = await Brand.findAll()
+  const maxPrice = await Product.aggregate('price', 'max')
+  const context = {
+    req,
+    pageTitle: 'Products',
+    maxPrice,
+    categories,
+    brands,
+    PRODUCT_COLORS,
+    PRODUCT_SIZES,
+    PRODUCT_ORDERINGS: Object.keys(PRODUCT_ORDERINGS)
+  }
 
-    const order = PRODUCT_ORDERINGS[req.query.order || 'newFirst']
-    const opts = {
-      include: [
-        { model: Category, required: true },
-        { model: Brand, required: true }
-      ],
+  const order = PRODUCT_ORDERINGS[req.query.order || 'newFirst']
+  const opts = {
+    include: [
+      { model: Category, required: true },
+      { model: Brand, required: true }
+    ],
 
-      order: [order]
-    }
-    let filters = new ProductFilters(req.query)
-    filters = filters.getFilters()
-    console.log('Product filters: %s', util.inspect(filters))
-    if (filters.length) opts.where = { [and]: filters }
-    try {
-      const { count, rows: products } = await Product.findAndCountAll(opts)
-      return res.render(
-        'product/list', { ...context, maxPrice, categories, brands, count, products }
-      )
-    } catch (error) {
-      console.log(error)
-      return res.render(
-        'product/list',
-        { ...context, errors: error.errors.map(e => e.message) }
-      )
-    }
+    order: [order]
+  }
+  let filters = new ProductFilters(req.query)
+  filters = filters.getFilters()
+  console.log('Product filters: %s', util.inspect(filters))
+  if (filters.length) opts.where = { [and]: filters }
+  try {
+    const { count, rows: products } = await Product.findAndCountAll(opts)
+    return res.render(
+      'product/list', { ...context, maxPrice, categories, brands, count, products }
+    )
+  } catch (error) {
+    console.log(error)
+    return res.render(
+      'product/list',
+      { ...context, errors: error.errors.map(e => e.message) }
+    )
   }
 }
