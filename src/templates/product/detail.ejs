@@ -1,0 +1,48 @@
+<%- include('../header') %>
+<main>
+  <div class="detail-heading">
+    <h1 class="detail-heading__item">
+      <%= pageTitle %>
+    </h1>
+
+    <span class="detail-heading__item">
+      <%= product.formattedPrice %>
+    </span>
+
+    <span class="detail-heading__item">
+      <i>Created by</i> <%= product.user.fullName %>
+      <i>at <%= product.createdAt.toLocaleDateString() %></i>
+    </span>
+  </div>
+
+  <img src="<%= product.imagePath %>" alt="<%= product.name %>" width="200" height="200">
+
+  <ul>
+    <li>
+      <strong>Category:</strong> <%= product.category.name %>
+    </li>
+
+    <li>
+      <strong>Brand:</strong> <%= product.brand.name %>
+    </li>
+
+    <% if (product.color) { %>
+    <li>
+      <strong>Color:</strong> <%= product.color %>
+    </li>
+    <% } %>
+
+    <% if (product.size) { %>
+    <li>
+      <strong>Size:</strong> <%= product.size %>
+    </li>
+    <% } %>
+
+    <% if (product.description) { %>
+    <li>
+      <strong>Description:</strong> <%= product.description %>
+    </li>
+    <% } %>
+  </ul>
+</main>
+<%- include('../footer') %>

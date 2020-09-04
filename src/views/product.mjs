@@ -1,7 +1,7 @@
 import fs from 'fs'
 import util from 'util'
 import Sequelize from 'sequelize'
-import { Product, Category, Brand } from '../models/index.mjs'
+import { Product, User, Category, Brand } from '../models/index.mjs'
 import { PRODUCT_COLORS, PRODUCT_SIZES } from '../models/product.mjs'
 import Upload from '../upload.mjs'
 import { ProductFilters } from '../utils.mjs'
@@ -31,7 +31,7 @@ export const addProduct = {
       const imagePath = req.file.path
       console.log('Image path: "%s"', imagePath)
 
-      const productData = { ...req.body, imagePath, ownerId: req.user.id }
+      const productData = { ...req.body, imagePath, userId: req.user.id }
       console.log(`Product data: "${util.inspect(productData)}"`)
       Product.create(productData)
         .then(product => {
@@ -103,4 +103,17 @@ export async function listProducts (req, res) {
       { ...context, errors: error.errors.map(e => e.message) }
     )
   }
+}
+
+export async function productDetail (req, res) {
+  const opts = {
+    include: [
+      { model: User, required: true },
+      { model: Category, required: true },
+      { model: Brand, required: true }
+    ]
+  }
+  const product = await Product.findByPk(req.params.id, opts)
+  if (!product) return res.sendStatus(404)
+  res.render('product/detail', { req, pageTitle: product.name, product })
 }
