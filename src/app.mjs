@@ -30,6 +30,7 @@ app.use(session({
   proxy: true
 }))
 app.use(userMiddleware)
+app.use('/static', express.static(config.APP_STATICFILES_DIR))
 app.use('/uploads', express.static(config.APP_UPLOADS_DIR))
 
 app.get('/', listProducts)

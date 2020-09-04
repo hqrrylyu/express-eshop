@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'url'
-import { dirname } from 'path'
+import path from 'path'
 import env from 'env-var'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const __dirname = path.dirname(__filename)
 
 export const APP_DIR = __dirname
 
@@ -18,5 +18,7 @@ export const APP_PORT = env.get('PORT')
 
 export const APP_DB_URI = env.get('DB_URI')
   .required().asString()
+
+export const APP_STATICFILES_DIR = path.join(APP_DIR, 'static')
 
 export const APP_UPLOADS_DIR = '/uploads'
